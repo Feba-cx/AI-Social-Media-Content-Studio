@@ -1,0 +1,237 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Studio | Agent Studio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/content_studio.css') }}">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+<div class="app-layout">
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon"><i data-lucide="orbit"></i></div>
+            <div><h2>agent<span>studio</span></h2><small>AI WORKSPACE</small></div>
+        </div>
+        <div class="workspace-label">WORKSPACE</div>
+        <nav>
+            <a class="nav-item" href="/"><i data-lucide="layout-dashboard"></i> Overview</a>
+            <a class="nav-item active" href="/content-studio"><i data-lucide="pen-tool"></i> Content Studio</a>
+            <a class="nav-item" href="/content-studio?mode=creator"><i data-lucide="sparkles"></i> AI Content Creator</a>
+            <a class="nav-item" href="/drafts"><i data-lucide="file-text"></i> My Drafts</a>
+        </nav>
+        <div class="sidebar-bottom">
+            <div class="profile">
+                <div class="avatar">AS</div>
+                <div><strong>My Workspace</strong><small>Personal workspace</small></div>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="breadcrumb"><a href="/">Workspace</a> <span>/</span> Content Studio</div>
+            <div class="top-actions"><span class="status"><span></span> Workspace ready</span><div class="avatar">AS</div></div>
+        </header>
+
+        <section class="page studio-page">
+            <div class="studio-heading">
+                <div>
+                    <p class="eyebrow">AI CREATIVE WORKSPACE</p>
+                    <h1>Content Studio <span>✦</span></h1>
+                    <p class="subtitle">Turn your ideas into engaging content with your AI agents.</p>
+                </div>
+            </div>
+
+            <div class="studio-layout">
+                <section class="studio-panel">
+                    <div class="panel-heading">
+                        <div class="agent-icon purple"><i data-lucide="pen-line"></i></div>
+                        <div><h2>Content Writer</h2><p>Configure what you want your agent to create.</p></div>
+                    </div>
+
+                    <form id="content-form">
+                        <label for="content-type">What would you like to create?</label>
+                        <select id="content-type" name="content_type">
+                            <option value="Social media post">Social media post</option>
+                            <option value="Marketing copy">Marketing copy</option>
+                            <option value="Content ideas">Content ideas</option>
+                            <option value="Product description">Product description</option>
+                        </select>
+
+                        <label for="topic">Topic or brief</label>
+                        <textarea id="topic" name="topic" rows="5" placeholder="Describe your idea, audience, product, or message..." required></textarea>
+
+                        <div class="form-row">
+                            <div>
+                                <label for="platform">Platform</label>
+                                <select id="platform" name="platform">
+                                    <option>LinkedIn</option>
+                                    <option>Instagram</option>
+                                    <option>Facebook</option>
+                                    <option>General</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="tone">Writing tone</label>
+                                <select id="tone" name="tone">
+                                    <option>Professional</option>
+                                    <option>Friendly</option>
+                                    <option>Creative</option>
+                                    <option>Persuasive</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <label for="length">Content length</label>
+                        <select id="length" name="length">
+                            <option value="Short">Short</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="Long">Long</option>
+                        </select>
+
+                        <button class="primary-button generate-button" id="generate-button" type="submit">
+                            <i data-lucide="sparkles"></i> Generate content
+                        </button>
+                    </form>
+                </section>
+
+                <section class="studio-panel result-panel">
+                    <div class="result-heading">
+                        <div><p class="eyebrow">YOUR OUTPUT</p><h2>Content preview</h2></div>
+                        <span class="output-status" id="output-status">Waiting for input</span>
+                    </div>
+
+                    <div id="empty-output" class="output-placeholder">
+                        <div class="placeholder-icon"><i data-lucide="wand-sparkles"></i></div>
+                        <h3>Your next idea starts here</h3>
+                        <p>Enter a topic and generate content. Your result will appear in this workspace.</p>
+                    </div>
+
+                    <div id="result-area" hidden>
+                        <label for="generated-content">Edit your content</label>
+                        <textarea id="generated-content" rows="14" placeholder="Generated content will appear here..."></textarea>
+
+                        <div class="result-actions">
+                            <button class="secondary-button" id="copy-button" type="button">
+                            <i data-lucide="copy"></i> Copy
+                            </button>
+                            <button class="secondary-button" id="save-button" type="button">
+                            <i data-lucide="save"></i> Save draft
+                            </button>
+                            <button class="primary-button" id="submit-approval-button" type="button">
+                            <i data-lucide="clipboard-check"></i> Submit for approval
+                            </button>
+                        </div>
+                    </div>
+                    
+<p class="feedback" id="feedback" role="status"></p>
+
+<hr class="image-generator-divider">
+
+<div class="image-generator">
+    <div class="panel-heading">
+        <div class="agent-icon purple">
+            <i data-lucide="image"></i>
+        </div>
+        <div>
+            <h2>AI Image Generator</h2>
+            <p>Create images locally using your Intel GPU.</p>
+        </div>
+    </div>
+
+    <label for="image-prompt">Describe the image you want</label>
+    <textarea
+        id="image-prompt"
+        rows="4"
+        placeholder="Example: A modern coffee shop with warm natural lighting..."
+    ></textarea>
+
+    <button
+        class="primary-button generate-button"
+        id="generate-image-button"
+        type="button"
+    >
+        <i data-lucide="image-plus"></i>
+        Generate image
+    </button>
+
+    <p id="image-status" class="feedback" role="status"></p>
+
+    <div id="image-result" hidden>
+        <img
+            id="generated-image"
+            alt="AI-generated image preview"
+            style="display:block; max-width:100%; width:100%; height:auto; border-radius:12px;"
+        >
+
+        <a
+            id="download-image"
+            class="secondary-button"
+            href="#"
+            download="generated-image.png"
+        >Download image</a>
+    </div>
+</div>
+
+
+<hr class="image-generator-divider">
+
+<div class="image-generator">
+    <div class="panel-heading">
+        <div class="agent-icon purple">
+            <i data-lucide="audio-lines"></i>
+        </div>
+        <div>
+            <h2>AI Voice Generator</h2>
+            <p>Turn your marketing content into speech locally.</p>
+        </div>
+    </div>
+
+    <label for="audio-text">Text to convert to speech</label>
+    <textarea
+        id="audio-text"
+        rows="5"
+        placeholder="Generate content above, or enter your own text..."
+    ></textarea>
+
+    <button
+        class="primary-button generate-button"
+        id="generate-audio-button"
+        type="button"
+    >
+        <i data-lucide="mic"></i>
+        Generate voice
+    </button>
+
+    <p id="audio-status" class="feedback" role="status"></p>
+
+    <div id="audio-result" hidden>
+        <audio
+            id="generated-audio"
+            controls
+            style="display:block; width:100%; margin:12px 0;"
+        ></audio>
+
+        <a
+            id="download-audio"
+            class="secondary-button"
+            href="#"
+            download="generated-voice.wav"
+        >Download audio</a>
+    </div>
+</div>
+
+
+            </div>
+        </section>
+    </main>
+</div>
+<script src="{{ url_for('static', filename='js/api.js') }}"></script>
+<script src="{{ url_for('static', filename='js/content_studio.js') }}"></script>
+<script>lucide.createIcons();</script>
+</body>
+</html>
