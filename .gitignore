@@ -1,0 +1,22 @@
+.env
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local AI models and generated files
+models/
+*.gguf
+*.safetensors
+*.bin
+*.onnx
+*.pt
+*.pth
+
+# Generated media and temporary files
+generated/
+outputs/
+temp/
+*.wav
+*.mp4
