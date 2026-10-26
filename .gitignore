@@ -31,3 +31,5 @@ static/generated_images/
 __pycache__/
 *.py[cod]
 .env
+
+.env
