@@ -20,3 +20,14 @@ outputs/
 temp/
 *.wav
 *.mp4
+
+
+venv/
+image_venv/
+.venv/
+models/
+static/generated_audio/
+static/generated_images/
+__pycache__/
+*.py[cod]
+.env
